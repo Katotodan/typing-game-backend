@@ -11,12 +11,16 @@ const app = express();
 const PORT = process.env.PORT || 3000
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL
+  origin: process.env.FRONTEND_URL,
+  methods: ["GET", "POST"],
+  credentials: true
 }))
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: process.env.FRONTEND_URL
+    origin: process.env.FRONTEND_URL,
+    methods: ["GET", "POST"],
+  credentials: true
   }
 }); 
       
