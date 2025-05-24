@@ -12,14 +12,14 @@ const PORT = process.env.PORT || 3000
 
 app.use(cors({
   origin: process.env.FRONTEND_URL,
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST", "OPTIONS"],
   credentials: true
 }))
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
     origin: process.env.FRONTEND_URL,
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "OPTIONS"],
   credentials: true
   }
 }); 
