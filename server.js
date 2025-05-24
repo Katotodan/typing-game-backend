@@ -11,14 +11,14 @@ const app = express();
 const PORT = process.env.PORT || 3000
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: "https://typing-game-client-pink.vercel.app",
   methods: ["GET", "POST", "OPTIONS"],
   credentials: true
 }))
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: process.env.FRONTEND_URL,
+    origin: "https://typing-game-client-pink.vercel.app",
     methods: ["GET", "POST", "OPTIONS"],
   credentials: true
   }
