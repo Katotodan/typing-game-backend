@@ -4,21 +4,19 @@ const { Server } = require('socket.io');
 const cors = require('cors')
 require("dotenv").config()
 
-// Importing process module for showing the warning 
-const process = require('process')
 
 const app = express();
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 5000
 
 app.use(cors({
-  origin: "https://typing-game-client-pink.vercel.app",
+  origin: process.env.CLIENT_URL || "http://localhost:3000",
   methods: ["GET", "POST", "OPTIONS"],
   credentials: true
 }))
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://typing-game-client-pink.vercel.app",
+    origin:  process.env.CLIENT_URL || "http://localhost:3000",
     methods: ["GET", "POST", "OPTIONS"],
   credentials: true
   }
@@ -29,11 +27,14 @@ let onlineUser = []
 
 io.on('connection', (socket) => {
   socket.on("addUser", (data, callback) =>{
-    onlineUser.push({
-      "socketId": socket.id,
-      "username": data.username,      
-      "url": data.userImg
-    })
+    const exists = onlineUser.some(u => u.username === data.username);
+    if (!exists) {
+      onlineUser.push({
+        "socketId": socket.id,
+        "username": data.username,      
+        "url": data.userImg
+      })
+    }
     // Respond with acknowledgment
     callback({ status: "ok"})
 
@@ -95,8 +96,8 @@ app.get("/getUser", (req, res) =>{
 })   
 
 
-server.listen(PORT || 5000, () => {
-  console.log('server running on port ' + process.env.PORT);
+server.listen(PORT, () => {
+  console.log('server running on port ' + PORT);
 });
 
 // Event 'warning'  
