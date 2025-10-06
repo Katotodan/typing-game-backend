@@ -86,7 +86,10 @@ io.on('connection', (socket) => {
   })
 
   
-});    
+});   
+app.get("/wake-up", (req, res) =>{
+  res.send("Server is awake")
+})  
 app.get("/getUser", (req, res) =>{
   res.send(onlineUser)
 })   
